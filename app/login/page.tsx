@@ -1,11 +1,15 @@
 "use client";
 
 import { signIn } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
 
-export default function LoginPage() {
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/checkout";
+type LoginPageProps = {
+  searchParams: {
+    callbackUrl?: string;
+  };
+};
+
+export default function LoginPage({ searchParams }: LoginPageProps) {
+  const callbackUrl = searchParams?.callbackUrl || "/checkout";
 
   return (
     <section className="min-h-screen flex items-center justify-center bg-slate-50 px-6">
@@ -21,7 +25,7 @@ export default function LoginPage() {
           Please sign in to add items to your cart and complete your purchase.
         </p>
 
-        {/* GOOGLE SIGN IN */}
+        {/* GOOGLE LOGIN */}
         <button
           onClick={() =>
             signIn("google", {
