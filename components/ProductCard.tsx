@@ -18,37 +18,39 @@ export default function ProductCard({ product }: { product: Product }) {
   const { status } = useSession();
   const router = useRouter();
 
-  // LOCAL UI STATE
   const [expanded, setExpanded] = useState(false);
 
   const itemInCart = cart.find((item) => item.id === product.id);
 
   const handleAdd = () => {
-    // 🔒 AUTH CHECK
+    // 🔒 USER NOT LOGGED IN
     if (status !== "authenticated") {
       alert("Please sign in to add products to the cart.");
-      router.push("/login");
+      router.push("/login?callbackUrl=/products");
       return;
     }
 
+    // ✅ USER LOGGED IN
     addToCart(product);
     setExpanded(true);
   };
 
   const handleContinue = () => {
-    setExpanded(false); // Close controls but keep item in cart
+    setExpanded(false);
   };
 
   return (
-    <div className="bg-white rounded-2xl border border-slate-200 shadow-sm hover:shadow-xl transition overflow-hidden">
-
+    <div
+      className="group bg-white rounded-3xl border border-slate-200
+                 transition hover:-translate-y-1 hover:shadow-lg overflow-hidden"
+    >
       {/* IMAGE */}
-      <div className="relative w-full h-60 bg-slate-100">
+      <div className="relative w-full h-64 bg-slate-100 flex items-center justify-center">
         <Image
           src={product.image}
           alt={product.name}
           fill
-          className="object-contain p-6"
+          className="object-contain p-8 transition-transform duration-300 group-hover:scale-105"
           sizes="(max-width: 768px) 100vw, 33vw"
         />
       </div>
@@ -59,37 +61,39 @@ export default function ProductCard({ product }: { product: Product }) {
           {product.name}
         </h2>
 
-        <p className="text-indigo-600 font-bold text-lg mb-4">
+        <p className="text-indigo-600 font-bold text-lg mb-5">
           ${product.price}
         </p>
 
-        {/* ADD BUTTON / CART CONTROLS */}
+        {/* ADD / CONTROLS */}
         {!expanded || !itemInCart ? (
           <button
             onClick={handleAdd}
-            className="w-full py-3 rounded-xl bg-indigo-600 text-white font-medium
-                       hover:bg-indigo-700 transition"
+            className="w-full py-3 rounded-xl bg-indigo-600 text-white
+                       font-semibold hover:bg-indigo-700 transition"
           >
             Add to Cart
           </button>
         ) : (
           <>
-            {/* + / - CONTROLS */}
+            {/* QUANTITY CONTROLS */}
             <div className="flex items-center justify-between mb-4">
               <button
                 onClick={() => decreaseQty(product.id)}
-                className="w-12 h-12 rounded-lg bg-slate-200 text-xl font-bold hover:bg-slate-300"
+                className="w-11 h-11 rounded-lg bg-slate-100
+                           text-xl font-semibold hover:bg-slate-200 transition"
               >
                 –
               </button>
 
-              <span className="text-lg font-bold">
+              <span className="text-lg font-bold text-slate-900">
                 {itemInCart.qty}
               </span>
 
               <button
                 onClick={() => increaseQty(product.id)}
-                className="w-12 h-12 rounded-lg bg-slate-200 text-xl font-bold hover:bg-slate-300"
+                className="w-11 h-11 rounded-lg bg-slate-100
+                           text-xl font-semibold hover:bg-slate-200 transition"
               >
                 +
               </button>
@@ -99,14 +103,16 @@ export default function ProductCard({ product }: { product: Product }) {
             <div className="flex flex-col gap-2">
               <button
                 onClick={handleContinue}
-                className="w-full py-2 rounded-lg border border-slate-300 text-slate-700 hover:bg-slate-100"
+                className="w-full py-2.5 rounded-lg border border-slate-300
+                           text-slate-700 hover:bg-slate-100 transition"
               >
                 Continue Shopping
               </button>
 
               <button
                 onClick={() => router.push("/checkout")}
-                className="w-full py-2 rounded-lg bg-green-600 text-white hover:bg-green-700"
+                className="w-full py-2.5 rounded-lg bg-emerald-600
+                           text-white font-medium hover:bg-emerald-700 transition"
               >
                 Go to Cart
               </button>

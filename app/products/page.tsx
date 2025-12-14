@@ -27,21 +27,25 @@ export default function ProductsPage() {
   });
 
   return (
-    <section className="bg-slate-50 min-h-screen py-20">
-      <div className="max-w-7xl mx-auto px-6">
+    <section className="relative bg-slate-50 min-h-screen py-24">
+      {/* subtle background */}
+      <div className="absolute inset-0 bg-gradient-to-b from-indigo-50/50 via-transparent to-transparent" />
+
+      <div className="relative max-w-7xl mx-auto px-6">
 
         {/* HEADER */}
-        <div className="mb-12 text-center">
+        <div className="mb-14 text-center">
           <h1 className="text-4xl font-extrabold text-slate-900 mb-3">
             All Products
           </h1>
           <p className="text-slate-600">
-            Showing {filteredProducts.length} products
+            Showing {filteredProducts.length} items
           </p>
         </div>
 
         {/* FILTER BAR */}
-        <div className="flex flex-col md:flex-row gap-4 mb-12 justify-between items-center">
+        <div className="bg-white border border-slate-200 rounded-2xl p-5 mb-14
+                        flex flex-col md:flex-row gap-4 justify-between items-center shadow-sm">
 
           {/* SEARCH */}
           <input
@@ -53,12 +57,12 @@ export default function ProductsPage() {
                        focus:outline-none focus:ring-2 focus:ring-indigo-500"
           />
 
-          {/* CATEGORY FILTER */}
+          {/* CATEGORY */}
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className="w-full md:w-60 px-4 py-3 rounded-xl border border-slate-300
-                       focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            className="w-full md:w-56 px-4 py-3 rounded-xl border border-slate-300
+                       bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
           >
             <option value="All">All Categories</option>
             <option value="Fashion">Fashion</option>
@@ -69,11 +73,11 @@ export default function ProductsPage() {
 
         {/* PRODUCT GRID */}
         {filteredProducts.length === 0 ? (
-          <div className="text-center text-slate-500 mt-20">
-            No products found.
+          <div className="text-center text-slate-500 mt-24">
+            No products match your search.
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-12">
             {filteredProducts.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}

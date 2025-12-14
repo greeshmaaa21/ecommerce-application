@@ -2,20 +2,13 @@
 
 import { signIn } from "next-auth/react";
 
-export const dynamic = "force-dynamic";
-
-type LoginPageProps = {
-  searchParams: {
-    callbackUrl?: string;
-  };
-};
-
-export default function LoginPage({ searchParams }: LoginPageProps) {
-  const callbackUrl = searchParams?.callbackUrl || "/checkout";
+export default function LoginPage() {
+  const callbackUrl = "/products";
 
   return (
     <section className="min-h-screen flex items-center justify-center bg-slate-50 px-6">
       <div className="bg-white border border-slate-200 rounded-3xl p-10 w-full max-w-md text-center shadow-sm">
+
         <h1 className="text-3xl font-extrabold text-slate-900 mb-3">
           Login to Continue
         </h1>
@@ -28,7 +21,6 @@ export default function LoginPage({ searchParams }: LoginPageProps) {
           onClick={() =>
             signIn("google", {
               callbackUrl,
-              redirect: true,
             })
           }
           className="w-full bg-white border border-slate-300 text-slate-800
@@ -42,6 +34,7 @@ export default function LoginPage({ searchParams }: LoginPageProps) {
           />
           Continue with Google
         </button>
+
       </div>
     </section>
   );
