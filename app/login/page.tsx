@@ -2,7 +2,7 @@
 
 import { signIn } from "next-auth/react";
 
-export const dynamic = "force-dynamic"; // 🚨 IMPORTANT
+export const dynamic = "force-dynamic";
 
 type LoginPageProps = {
   searchParams: {
@@ -16,7 +16,6 @@ export default function LoginPage({ searchParams }: LoginPageProps) {
   return (
     <section className="min-h-screen flex items-center justify-center bg-slate-50 px-6">
       <div className="bg-white border border-slate-200 rounded-3xl p-10 w-full max-w-md text-center shadow-sm">
-
         <h1 className="text-3xl font-extrabold text-slate-900 mb-3">
           Login to Continue
         </h1>
@@ -43,7 +42,6 @@ export default function LoginPage({ searchParams }: LoginPageProps) {
           />
           Continue with Google
         </button>
-
       </div>
     </section>
   );
